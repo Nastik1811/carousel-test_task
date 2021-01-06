@@ -2,17 +2,27 @@
   "name": "carousel-test_task",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "npx webpack --mode development",
+    "build": "npx webpack --mode production",
+    "watch": "npx webpack --mode development --watch",
+    "start": "npx webpack serve --mode development --open"
   },
   "author": "Anastasia <nastik18111999@gmail.com>",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-react": "^7.12.10",
     "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^7.0.0",
+    "css-loader": "^5.0.1",
+    "file-loader": "^6.2.0",
     "html-webpack-plugin": "^4.5.1",
+    "style-loader": "^2.0.0",
     "webpack": "^5.11.1",
-    "webpack-cli": "^4.3.1"
+    "webpack-cli": "^4.3.1",
+    "webpack-dev-server": "^3.11.1"
   },
   "dependencies": {
     "react": "^17.0.1",
