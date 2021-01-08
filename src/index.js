@@ -1,6 +1,7 @@
+import React from 'react'
+import {render} from 'react-dom'
+import App from './App'
+import './styles.css'
 
-const Carousel = require('./Carousel/Carousel')
 
-const root = document.querySelector('#root')
-const carousel = Carousel()
-root.append(carousel)
+render(<App/>, document.getElementById('root'))
