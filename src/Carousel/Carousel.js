@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 const Slide = styled.li`
-  display: ${props => props.active ? "grid" : "none"};
+  //display: ${props => props.active ? "grid" : "none"};
   position: absolute;
   top: 0;
+  left:${props => `${props.order * 100}%`};
   width: 100%;
-  height: 100%;
+  bottom:0;
+
 `
 
 const Container = styled.section`
@@ -23,6 +25,7 @@ const Container = styled.section`
 const SlideArea = styled.div`
     display: block;
     overflow: hidden;
+    position: relative;
     margin: auto;
     background-color: lavender;
     width: 100%;
@@ -31,8 +34,8 @@ const SlideArea = styled.div`
 
 const Track = styled.ul`
     list-style: none;
-    position: relative;
     height: 100%;
+    transition: ${props => props.isSwiping ? "all .1s linear" : "all 1s linear"};
 `
 
 const Control = styled.button`
@@ -55,24 +58,64 @@ const Nav = styled.div`
     gap: 10px;
 `
 
+const settings = {
+    infinite: true,
+    slidesOnScreen: 1,
+    timeout: 10000,
+
+}
 
 const Carousel = ({children, width}) => {
     const [activeIndex, setActiveIndex] = useState(0)
-    const [count, setCount] = useState(0)
+    const [offset, setOffset] = useState(0)
+    const [isSwiping, setIsSwiping] = useState(false)
+    const [touchX, setTouchX] = useState(null)
+
 
     const handleForward = (e) => {
         activeIndex === children.length - 1 ?  setActiveIndex(0) : setActiveIndex(i => i + 1)
-     }
+    }
     const handleBackward = (e) => {
         activeIndex ===  0 ?  setActiveIndex(children.length - 1) : setActiveIndex(i => i - 1)
-     }
+    }
+
+
+    const handleDown = (e) => {
+        e.preventDefault();
+        setIsSwiping(true)
+        e.target.setPointerCapture(e.pointerId);
+        setTouchX(e.pageX)
+    }
+
+    const handleMove = (e) => {
+        if(!isSwiping){return;}
+        setOffset(e.pageX-touchX);
+    }
+
+    const handleUp = () => {
+        if(offset < -200){
+            handleForward()
+        }else if(offset > 200){
+            handleBackward()
+        }
+        setIsSwiping(false)
+        setOffset(0)
+    }
 
     return(
         <Container>
             <Control onClick={handleBackward}>~</Control>
             <SlideArea>
-                <Track>
-                    {children.map((slide, index) => <Slide draggable active={activeIndex === index} key={index}>{slide}</Slide>)}
+                <Track  
+                    onPointerDown={handleDown} 
+                    onPointerMove={handleMove} 
+                    onPointerUp={handleUp}
+                    onPointerCancel={handleUp}
+                    activeIndex={activeIndex} 
+                    isSwiping={isSwiping}
+                    style={{transform: `translateX(${-100 * activeIndex}%) translateX(${offset}px)`}}
+                    >
+                    {children.map((slide, index) => <Slide active={activeIndex === index} key={index} order={index}>{slide}</Slide>)}
                 </Track>
             </SlideArea>
             <Control onClick={handleForward}>~</Control>
