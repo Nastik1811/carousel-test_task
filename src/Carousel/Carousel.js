@@ -12,10 +12,10 @@ const Slide = styled.li`
 `
 
 const Container = styled.section`
-    display:grid;
-    grid-template-columns: 40px 1fr 40px;
-    grid-template-rows: 1fr auto;
-    gap: 12px;
+    display:flex;
+    flex-direction: column;
+    position:relative;
+    gap: 16px;
     justify-content: center;
     align-items: center;
     margin: auto;
@@ -35,34 +35,79 @@ const SlideArea = styled.div`
 const Track = styled.ul`
     list-style: none;
     height: 100%;
-    transition: ${props => props.isSwiping ? "all .1s linear" : "all 1s linear"};
+    transition: ${props => props.isSwiping ? "all .1s linear" : "all .8s linear"};
 `
 
 const Control = styled.button`
+    display: grid;
+    position: absolute;
+    top: 50%;
+    left: ${props => props.direction === "left" ? "12px" : "unset"};
+    right: ${props => props.direction === "right" ? "12px" : "unset"};
+    opacity: 0;
+    z-index:100;
     border-radius: 50%;
     width: 40px;
     height: 40px;
+    place-items: center;
+    background-color: transparent;
+    border: 3px solid #fff;
+    transform: ${props => props.direction === "right" ? "rotate(45deg)" : "rotate(-135deg)"};
+    transition: opacity .3s ease-in;
+    &:focus{
+        outline: none;
+    }
+    ${Container}:hover &{
+        opacity: 0.5;
+
+        &:hover{
+            opacity: 0.7;
+        }
+        &:focus{
+            opacity: 1;
+        }
+    }
+
+   
 `
-const Indicator = styled.div`
-    width:12px;
-    height: 12px;
+
+const Arrow = styled.div`
+    border-color: inherit;
+    border-style: solid;
+    border-width: 3px 3px 0 0;
+    width: 40%;
+    height: 40%;
+`
+
+const Indicator = styled.li`
+    cursor: pointer;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
-    border: 1px solid black;
-    background-color: ${props => props.active ? "black" : "transparent"};
+    background-color: #333;
+    opacity: ${props => props.active ? "1" : ".5"};
+    &:hover{
+        opacity: .7;
+    }
+    transition: opacity .1s ease-in;
 `
-const Nav = styled.div`
+const Nav = styled.ul`
     display:flex;
     grid-row: 2;
     grid-column: 2;
     margin: auto;
-    gap: 10px;
+    gap: 30px;
+    list-style: none;
 `
+
 
 const settings = {
     infinite: true,
     slidesOnScreen: 1,
     timeout: 10000,
-
+    includeIndicators: true,
+    includeNavArrows: true,
+    autoplay: false,
 }
 
 const Carousel = ({children, width}) => {
@@ -104,7 +149,7 @@ const Carousel = ({children, width}) => {
 
     return(
         <Container>
-            <Control onClick={handleBackward}>~</Control>
+            <Control onClick={handleBackward} direction='left'><Arrow /></Control>
             <SlideArea>
                 <Track  
                     onPointerDown={handleDown} 
@@ -113,14 +158,14 @@ const Carousel = ({children, width}) => {
                     onPointerCancel={handleUp}
                     activeIndex={activeIndex} 
                     isSwiping={isSwiping}
-                    style={{transform: `translateX(${-100 * activeIndex}%) translateX(${offset}px)`}}
+                    style={{transform: `translate3d(${-100 * activeIndex}%, 0, 0) translate3d(${offset}px, 0, 0)`}}
                     >
-                    {children.map((slide, index) => <Slide active={activeIndex === index} key={index} order={index}>{slide}</Slide>)}
+                    {React.Children.map(children, (slide, index) => <Slide active={activeIndex === index} key={index} order={index}>{slide}</Slide>)}
                 </Track>
             </SlideArea>
-            <Control onClick={handleForward}>~</Control>
+            <Control onClick={handleForward}  direction='right'><Arrow/></Control>
             <Nav>
-                {children.map((slide, index) => <Indicator active={activeIndex === index} key={index}/>)}
+                {children.map((slide, index) => <Indicator active={activeIndex === index} key={index} onClick={() => setActiveIndex(index)}/>)}
             </Nav>
         </Container>
     )
