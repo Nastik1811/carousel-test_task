@@ -10,13 +10,13 @@ const settings = {
     autoplay: false,
 }
 
-const Carousel = ({children, ...settings}) => {
+const Carousel = ({children}) => {
     const [activeIndex, setActiveIndex] = useState(0)
     const [offset, setOffset] = useState(0)
     const [isSwiping, setIsSwiping] = useState(false)
     const [touchX, setTouchX] = useState(null)
-    const [edgeRiched, seetEdgeRiched] = useState(false)
     const [transitionActive, setTrasitionActive] = useState(false)
+    const areaRef = useRef()
 
     const handleNavigation = (index) => {
         if(!transitionActive) {
@@ -38,52 +38,58 @@ const Carousel = ({children, ...settings}) => {
 
     const handleUp = () => {
         setIsSwiping(false)
-        //200??
-        if(offset < -200){
+        const k = (offset / areaRef.current.offsetWidth)
+        if(k < - 0.15){
             handleNavigation(i => i + 1)
-        }else if(offset > 200){
+        }else if(k > 0.15){
             handleNavigation(i => i - 1)
+        }else if(offset !== 0){
+            setTrasitionActive(true)
         }
         setOffset(0)
     }
    
-    const checkIndex = (e) => {
+    const handleTransitionEnd = (e) => {
         setTrasitionActive(false)
-        console.log(e)
         if(activeIndex === children.length){
             setActiveIndex(0)
         }else if(activeIndex === -1){
             setActiveIndex(children.length - 1)
         }
     }
-
     return(
         <Container>
-            <Control onClick={() => handleNavigation(i => i - 1)} name='backward'><Arrow /></Control>
-            <SlideArea>
+            <Control direction="backward" onClick={() => handleNavigation(i => i - 1)} >
+                <Arrow/>
+            </Control>
+            <SlideArea ref={areaRef}>
                 <Track  
                     onPointerDown={handleDown} 
                     onPointerMove={handleMove} 
                     onPointerUp={handleUp}
                     onPointerCancel={handleUp}
+                    onPointerLeave={handleUp}
                     activeIndex={activeIndex} 
-                    withTransition={!isSwiping}
-                    onTransitionEnd={checkIndex}
                     offset={offset}
+                    withTransition={transitionActive}
+                    onTransitionEnd={handleTransitionEnd}
                     >
-                        <Slide order={-1}>{children[React.Children.count(children) - 1]}</Slide>
+                        <Slide order={-1} aria-hidden={true}>{children[React.Children.count(children) - 1]}</Slide>
                         {
-                        React.Children.map(children, (slide, index) => 
+                            React.Children.map(children, (slide, index) => 
                             <Slide 
-                                active={activeIndex === index} 
                                 key={index} 
-                                order={index}>{slide}
+                                order={index}
+                                aria-hidden={activeIndex !== index}
+                                >{slide}
                             </Slide>)
                         }
-                        <Slide order={React.Children.count(children)}>{children[0]}</Slide>
+                        <Slide order={React.Children.count(children)} aria-hidden={true}>{children[0]}</Slide>
                 </Track>
             </SlideArea>
-            <Control onClick={() => handleNavigation(i => i + 1)} name='forward'><Arrow/></Control>
+            <Control direction="forward" onClick={() => handleNavigation(i => i + 1)}>
+                <Arrow/>
+            </Control>
             <Nav>
                 {children.map((slide, index) => <Indicator active={activeIndex === index} key={index} onClick={() => handleNavigation(index)}/>)}
             </Nav>

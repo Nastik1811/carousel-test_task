@@ -1,24 +1,21 @@
 import styled from 'styled-components'
 
 export const Slide = styled.li`
-  //display: ${props => props.active ? "grid" : "none"};
   position: absolute;
   top: 0;
   left:${props => `${props.order * 100}%`};
   width: 100%;
   bottom:0;
-
 `
 
-export const Container = styled.section`
+export const Container = styled.div.attrs(props => ({style: {height: props.height ? `${props.height}px` : '600px'}}))`
     display:flex;
     flex-direction: column;
     position:relative;
-    gap: 16px;
+    gap: 12px;
     justify-content: center;
     align-items: center;
     margin: auto;
-    height: 600px;
 `
 
 export const SlideArea = styled.div`
@@ -26,34 +23,37 @@ export const SlideArea = styled.div`
     overflow: hidden;
     position: relative;
     margin: auto;
-    background-color: lavender;
     width: 100%;
     height: 100%;
 `
 
 export const Track = styled.ul.attrs(props=> (
-    {style: {transform: `translate3d(${-100 * props.activeIndex}%, 0, 0) translate3d(${props.offset}px, 0, 0)`}}))`
+    {
+        style: {
+            transform: `translateX(${-100 * props.activeIndex}%) translateX(${props.offset}px)`,
+            transition: `${props.withTransition ? "transform ease .5s" : "none"}`
+            }
+    }))`
     list-style: none;
     height: 100%;
-    transition: ${props => props.withTransition ? "transform ease .5s" : "none"};
 `
 
 export const Control = styled.button`
     display: grid;
     position: absolute;
-    top: 50%;
-    left: ${props => props.name === "backward" ? "12px" : "unset"};
-    right: ${props => props.name === "forward" ? "12px" : "unset"};
+    cursor: pointer;
+    top: 0;
+    left: ${props => props.direction === "backward" ? "0" : "unset"};
+    right: ${props => props.direction === "forward" ? "0" : "unset"};
     opacity: 0;
     z-index:100;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 10%;
+    height: 100%;
     place-items: center;
     background-color: transparent;
-    border: 3px solid #fff;
-    transform: ${props => props.name === "forward" ? "rotate(45deg)" : "rotate(-135deg)"};
-    transition: opacity .3s ease-in;
+    border: none;
+    transform: ${props => props.direction === "backward" ? "rotate(180deg)" : "unset"};
+    transition: opacity .1s ease-in;
     &:focus{
         outline: none;
     }
@@ -61,22 +61,21 @@ export const Control = styled.button`
         opacity: 0.5;
 
         &:hover{
-            opacity: 0.7;
+            opacity: 0.8;
         }
         &:focus{
             opacity: 1;
         }
     }
-
-   
 `
 
 export const Arrow = styled.div`
-    border-color: inherit;
+    border-color:  #000;
     border-style: solid;
     border-width: 3px 3px 0 0;
-    width: 40%;
-    height: 40%;
+    width: 20px;
+    height: 20px;
+    transform: rotate(45deg);
 `
 
 export const Indicator = styled.li`
