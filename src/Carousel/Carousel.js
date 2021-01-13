@@ -1,16 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Container, Slide, SlideArea, Track, Nav, Indicator, Control, Arrow } from './styles'
+ 
 
-const settings = {
-    infinite: true,
-    slidesOnScreen: 1,
-    timeout: 10000,
-    includeIndicators: true,
-    includeNavArrows: true,
-    autoplay: false,
-}
+const minInterval = 2000
 
-const Carousel = ({children}) => {
+const Carousel = ({children, interval=minInterval, controls, indicators, autoplay}) => {
     const [activeIndex, setActiveIndex] = useState(0)
     const [offset, setOffset] = useState(0)
     const [isSwiping, setIsSwiping] = useState(false)
@@ -33,18 +27,20 @@ const Carousel = ({children}) => {
     }, [])
 
     useEffect(() => {
+        if(!autoplay){
+            return
+        }
         if(autorotationEnabled){
             if(!intervalHandler){
-                const id = setInterval(() => handleNavigation(i => i + 1), 2000)
+                let actualInterval = interval > minInterval ? interval : minInterval
+                const id = setInterval(() => handleNavigation(i => i + 1), actualInterval)
                 setIntervalHandler(id)
-                console.log('set', id)
             }
         }else{
-            console.log('clear', intervalHandler)
             clearInterval(intervalHandler)
             setIntervalHandler(null)
         }
-    }, [autorotationEnabled, intervalHandler])
+    }, [autorotationEnabled, intervalHandler, autoplay])
 
     const handleNavigation = (index) => {
         if(!transitionActive) {
@@ -76,6 +72,12 @@ const Carousel = ({children}) => {
         }
         setOffset(0)
     }
+
+    useEffect(() => {
+        if(activeIndex > React.Children.count(children)){
+            setActiveIndex(0)
+        }
+    }, [activeIndex])
    
     const handleTransitionEnd = () => {
         setTrasitionActive(false)
@@ -85,11 +87,33 @@ const Carousel = ({children}) => {
             setActiveIndex(children.length - 1)
         }
     }
+
+    if(!children){
+        return(
+            null
+        )
+    }
+
+    if(React.Children.count(children) === 1){
+        return(
+            <Container>
+                <SlideArea ref={areaRef}>
+                    <Track activeIndex={0} >
+                        <Slide>
+                            {children}
+                        </Slide>
+                    </Track>
+                </SlideArea>
+            </Container>
+        )
+    }
     return(
         <Container onMouseOver={() => setAutorotationEnabled(false)} onMouseLeave={() => setAutorotationEnabled(true)}>
-            <Control direction="backward" onClick={() => handleNavigation(i => i - 1)}>
-                <Arrow/>
-            </Control>
+            {controls &&
+                <Control direction="backward" onClick={() => handleNavigation(i => i - 1)}>
+                    <Arrow/>
+                </Control>
+            }   
             <SlideArea ref={areaRef}>
                 <Track  
                     onPointerDown={handleDown} 
@@ -115,12 +139,16 @@ const Carousel = ({children}) => {
                         <Slide order={React.Children.count(children)} aria-hidden={true}>{children[0]}</Slide>
                 </Track>
             </SlideArea>
-            <Control direction="forward" onClick={() => handleNavigation(i => i + 1)}>
-                <Arrow/>
-            </Control>
-            <Nav>
-                {children.map((slide, index) => <Indicator active={activeIndex === index} key={index} onClick={() => handleNavigation(index)}/>)}
-            </Nav>
+            {controls &&
+                <Control direction="forward" onClick={() => handleNavigation(i => i + 1)}>
+                    <Arrow/>
+                </Control>
+            }
+            {indicators &&
+                <Nav>
+                    {React.Children.map(children, (slide, index) => <Indicator active={activeIndex === index} key={index} onClick={() => handleNavigation(index)}/>)}
+                </Nav>
+            }
         </Container>
     )
 }
