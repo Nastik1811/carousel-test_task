@@ -1,0 +1,14 @@
+Make a useful readme - tell us how to set up your application.
+
+- Supports multiple slides on the screen
+
+Any optimizations related to performance are welcome and appreciated!
+
+Auto-rotation should pause on hover.
+Auto-rotation should permanently stop after any active user interaction.
+
+Desktop: Permanently stop auto-rotation after the user has clicked on the carousel’s interface controls.
+Use dots and arrows that are big enough and that contrast with the underlying image. 
+Never auto-rotate on mobile websites or for touch devices.
+Touch devices: Support swipe gestures, in addition to any other UI controls.
+Mobile devices: Ensure that the text in slides is still readable if you are scaling down artwork from the desktop.

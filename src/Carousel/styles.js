@@ -31,7 +31,7 @@ export const Track = styled.ul.attrs(props=> (
     {
         style: {
             transform: `translateX(${-100 * props.activeIndex}%) translateX(${props.offset}px)`,
-            transition: `${props.withTransition ? "transform ease .5s" : "none"}`
+            transition: `${props.withTransition ? "transform ease-out .8s" : "none"}`
             }
     }))`
     list-style: none;

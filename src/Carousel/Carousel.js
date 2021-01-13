@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Container, Slide, SlideArea, Track, Nav, Indicator, Control, Arrow } from './styles'
 
 const settings = {
@@ -16,7 +16,35 @@ const Carousel = ({children}) => {
     const [isSwiping, setIsSwiping] = useState(false)
     const [touchX, setTouchX] = useState(null)
     const [transitionActive, setTrasitionActive] = useState(false)
+    const [intervalHandler, setIntervalHandler] = useState(null)
+    const [autorotationEnabled, setAutorotationEnabled] = useState(true)
     const areaRef = useRef()
+
+    useEffect(() => {
+        const handleVisabilityChange = () => {
+            if(document.visibilityState === "visible"){
+                setAutorotationEnabled(true)
+            } else{
+                setAutorotationEnabled(false)
+            }
+        }
+        document.addEventListener("visibilitychange", handleVisabilityChange)
+        return () => document.removeEventListener("visibilitychange", handleVisabilityChange)
+    }, [])
+
+    useEffect(() => {
+        if(autorotationEnabled){
+            if(!intervalHandler){
+                const id = setInterval(() => handleNavigation(i => i + 1), 2000)
+                setIntervalHandler(id)
+                console.log('set', id)
+            }
+        }else{
+            console.log('clear', intervalHandler)
+            clearInterval(intervalHandler)
+            setIntervalHandler(null)
+        }
+    }, [autorotationEnabled, intervalHandler])
 
     const handleNavigation = (index) => {
         if(!transitionActive) {
@@ -49,7 +77,7 @@ const Carousel = ({children}) => {
         setOffset(0)
     }
    
-    const handleTransitionEnd = (e) => {
+    const handleTransitionEnd = () => {
         setTrasitionActive(false)
         if(activeIndex === children.length){
             setActiveIndex(0)
@@ -58,8 +86,8 @@ const Carousel = ({children}) => {
         }
     }
     return(
-        <Container>
-            <Control direction="backward" onClick={() => handleNavigation(i => i - 1)} >
+        <Container onMouseOver={() => setAutorotationEnabled(false)} onMouseLeave={() => setAutorotationEnabled(true)}>
+            <Control direction="backward" onClick={() => handleNavigation(i => i - 1)}>
                 <Arrow/>
             </Control>
             <SlideArea ref={areaRef}>
