@@ -44,19 +44,19 @@
 
   .item{
     width: 100%;
-    height: 100%;
+    height: 650px;
   }
 
   .img-item{
     width: 100%;
-    height: 100%;
     object-fit: cover;
   }
   .example2{
-    width: 800px;
+    width: 50%;
     margin: auto;
     background-color: #eee;
   }
+
   .block{
     width: 200px;
     height: 200px;

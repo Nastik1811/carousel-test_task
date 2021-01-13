@@ -1,14 +1,11 @@
 import styled from 'styled-components'
 
 export const Slide = styled.li`
-  position: absolute;
-  top: 0;
-  left:${props => `${props.order * 100}%`};
   width: 100%;
-  bottom:0;
+  height: fit-content;
 `
 
-export const Container = styled.div.attrs(props => ({style: {height: props.height ? `${props.height}px` : '600px'}}))`
+export const Container = styled.div`
     display:flex;
     flex-direction: column;
     position:relative;
@@ -30,12 +27,16 @@ export const SlideArea = styled.div`
 export const Track = styled.ul.attrs(props=> (
     {
         style: {
-            transform: `translateX(${-100 * props.activeIndex}%) translateX(${props.offset}px)`,
-            transition: `${props.withTransition ? "transform cubic-bezier(0.645, 0.045, 0.355, 1.000) 1s" : "none"}`
+            transform: `translateX(${-100 * (1 + props.activeIndex)}%) translateX(${props.offset}px)`,
+            transition: `${props.withTransition ? "transform ease-in .8s" : "none"}`
             }
     }))`
     list-style: none;
-    height: 100%;
+    display: grid;
+    grid-auto-columns: 100%;
+    grid-template-rows: min-content;
+    grid-auto-flow: column;
+
 `
 
 export const Control = styled.button`

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Container, Slide, SlideArea, Track, Nav, Indicator, Control, Arrow } from './styles'
- 
+
 
 const minInterval = 2000
 
