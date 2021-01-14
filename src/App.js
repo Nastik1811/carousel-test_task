@@ -5,6 +5,7 @@ import img2 from './assets/images/img-2.jpg'
 import img3 from './assets/images/img-3.jpg'
 import img4 from './assets/images/img-4.jpg'
 import img5 from './assets/images/img-5.jpg'
+import img6 from './assets/images/img-6.jpg'
 
 const App = () => {
     return(
@@ -13,7 +14,7 @@ const App = () => {
                 <h1 className="app-title">Carousel Demo</h1>
             </header>
             <section className="section section-full">
-                <Carousel autoplay controls indicators>
+                <Carousel inteereval={2200} autoplay controls indicators>
                     <div className="item">
                         <img src={img1} className="img-item"/>
                     </div>
@@ -29,22 +30,11 @@ const App = () => {
                     <div className="item">
                         <img src={img5} className="img-item"/>
                     </div>
-                </Carousel>
-            </section>
-            <section className="section example2">
-                <Carousel>
                     <div className="item">
-                        <div className="block"></div>
-                    </div>
-                    <div className="item">
-                        <div className="block"></div>
-                    </div>
-                    <div className="item">
-                        <div className="block"></div>
+                        <img src={img6} className="img-item"/>
                     </div>
                 </Carousel>
             </section>
-            
         </div>
     )
 }

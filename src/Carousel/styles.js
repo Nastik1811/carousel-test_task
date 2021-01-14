@@ -6,13 +6,10 @@ export const Slide = styled.li`
 `
 
 export const Container = styled.div`
-    display:flex;
-    flex-direction: column;
-    position:relative;
-    gap: 12px;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
+    display: grid;
+    row-gap: 12px;
+    grid-auto-flow: row;
+    place-items: center;
 `
 
 export const SlideArea = styled.div`
@@ -86,6 +83,7 @@ export const Indicator = styled.li`
     border-radius: 50%;
     background-color: #333;
     opacity: ${props => props.active ? "1" : ".5"};
+    margin: auto 15px;
     &:hover{
         opacity: .7;
     }
@@ -93,9 +91,6 @@ export const Indicator = styled.li`
 `
 export const Nav = styled.ul`
     display:flex;
-    grid-row: 2;
-    grid-column: 2;
     margin: auto;
-    gap: 30px;
     list-style: none;
 `

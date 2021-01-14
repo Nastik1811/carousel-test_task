@@ -8,7 +8,7 @@
     "dev": "cross-env NODE_ENV=development npx webpack --mode development",
     "build": "cross-env NODE_ENV=production npx webpack --mode production",
     "start": "cross-env NODE_ENV=development npx webpack serve --mode development --open",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "author": "Anastasia <nastik18111999@gmail.com>",
   "license": "ISC",
