@@ -6,6 +6,7 @@ Main features:
 - Works for mobile and desktop devices
 - Works for any HTML content
 - Support auto play (you can set an interval manualy)
+- Auto play is disabled on touch devices for better UX
 - Support swipes  
 - Support infinite slide show
 - Supports scrolling to a selected slide

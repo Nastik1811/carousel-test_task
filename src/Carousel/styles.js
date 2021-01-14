@@ -5,7 +5,6 @@ export const Slide = styled.li`
 
 export const Container = styled.div`
     display: grid;
-    cursor: grab;
     position: relative;
     row-gap: 12px;
     grid-auto-flow: row;
@@ -24,7 +23,7 @@ export const Track = styled.ul.attrs(props=> (
     {
         style: {
             transform: `translateX(${-100 * (1 + props.activeIndex)}%) translateX(${props.offset}px)`,
-            transition: `${props.withTransition ? "transform ease-in .8s" : "none"}`
+            transition: `${props.withTransition ? "transform ease-in .5s" : "none"}`
             }
     }))`
     list-style: none;
@@ -82,14 +81,17 @@ export const Indicator = styled.li`
     border-radius: 50%;
     background-color: #333;
     opacity: ${props => props.active ? "1" : ".5"};
-    margin: auto 15px;
     &:hover{
         opacity: .7;
     }
     transition: opacity .1s ease-in;
 `
+
 export const Nav = styled.ul`
-    display:flex;
+    display:grid;
+    grid-auto-flow:column;
+    grid-auto-columns: 30px;
+    align-items:center;
     margin: auto;
     list-style: none;
 `

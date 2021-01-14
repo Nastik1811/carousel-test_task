@@ -10,28 +10,44 @@ const App = () => {
             </header>
             <section className="section">
                 <Carousel inteereval={2200} autoplay controls indicators>
-                    <div className="item">
+                    <div className="item item-1">
                         <div className="html-content">
                             <h1>Hello world!</h1>
                             <p>
-                                Let's me introduce my Carousel Component:)
+                                This is my Carousel Component =)
                             </p>
                         </div>
                     </div>
-                    <div className="item">
+                    <div className="item item-4">
+                        <div className="html-content">
+                            <h1>It supports diffrent ways to navigate such as:</h1>
+                            <ul>
+                                <li>
+                                    Navigation Arrows
+                                </li>
+                                <li>
+                                    Navigation Indicators
+                                </li>
+                                <li>
+                                    Swipes
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div className="item item-2">
                         <div className="html-content">
                             <h1>Works for any HTML content</h1>
                             <p>Including images</p>
                         </div>
                     </div>
-                    <div className="item">
+                    <div className="item item-3">
                         <img src={img1} className="img-item"/>
                     </div>
-                    <div className="item">
+                    <div className="item item-4">
                         <div className="html-content">
-                            <h1>Hello world!</h1>
+                            <h1>And supprot infinite slide show =)</h1>
                             <p>
-                                And support infinite loop. Go next!
+                                Go to the next slide!
                             </p>
                         </div>
                     </div>
