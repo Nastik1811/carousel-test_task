@@ -70,7 +70,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-size: larger;
+    font-size: 1.3rem;
     padding: 1rem;
   }
 
@@ -83,6 +83,13 @@
   .section{
     width: 90%;
     margin: auto;
+  }
+
+  .note{
+    display: block;
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: rgba(0, 0, 0, 0.61);
   }
 
   @media(max-width: 700px){
