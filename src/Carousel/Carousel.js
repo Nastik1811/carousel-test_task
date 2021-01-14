@@ -26,8 +26,9 @@ const Carousel = ({children, interval=minInterval, controls, indicators, autopla
         return () => document.removeEventListener("visibilitychange", handleVisabilityChange)
     }, [])
 
+
     useEffect(() => {
-        if(!autoplay){
+        if(!autoplay ||  'ontouchstart' in window ){
             return
         }
         if(autorotationEnabled){

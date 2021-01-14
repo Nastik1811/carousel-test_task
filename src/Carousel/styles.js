@@ -1,12 +1,12 @@
 import styled from 'styled-components'
 
 export const Slide = styled.li`
-  width: 100%;
-  height: fit-content;
 `
 
 export const Container = styled.div`
     display: grid;
+    cursor: grab;
+    position: relative;
     row-gap: 12px;
     grid-auto-flow: row;
     place-items: center;
@@ -18,7 +18,6 @@ export const SlideArea = styled.div`
     position: relative;
     margin: auto;
     width: 100%;
-    height: 100%;
 `
 
 export const Track = styled.ul.attrs(props=> (

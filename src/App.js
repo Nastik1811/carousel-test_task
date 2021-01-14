@@ -1,11 +1,6 @@
 import React from 'react'
 import Carousel from './Carousel'
 import img1 from './assets/images/img-1.jpg'
-import img2 from './assets/images/img-2.jpg'
-import img3 from './assets/images/img-3.jpg'
-import img4 from './assets/images/img-4.jpg'
-import img5 from './assets/images/img-5.jpg'
-import img6 from './assets/images/img-6.jpg'
 
 const App = () => {
     return(
@@ -13,25 +8,32 @@ const App = () => {
             <header className="app-header">
                 <h1 className="app-title">Carousel Demo</h1>
             </header>
-            <section className="section section-full">
+            <section className="section">
                 <Carousel inteereval={2200} autoplay controls indicators>
+                    <div className="item">
+                        <div className="html-content">
+                            <h1>Hello world!</h1>
+                            <p>
+                                Let's me introduce my Carousel Component:)
+                            </p>
+                        </div>
+                    </div>
+                    <div className="item">
+                        <div className="html-content">
+                            <h1>Works for any HTML content</h1>
+                            <p>Including images</p>
+                        </div>
+                    </div>
                     <div className="item">
                         <img src={img1} className="img-item"/>
                     </div>
                     <div className="item">
-                        <img src={img2} className="img-item"/>
-                    </div>
-                    <div className="item">
-                        <img src={img3} className="img-item"/>
-                    </div>
-                    <div className="item">
-                        <img src={img4} className="img-item"/>
-                    </div>
-                    <div className="item">
-                        <img src={img5} className="img-item"/>
-                    </div>
-                    <div className="item">
-                        <img src={img6} className="img-item"/>
+                        <div className="html-content">
+                            <h1>Hello world!</h1>
+                            <p>
+                                And support infinite loop. Go next!
+                            </p>
+                        </div>
                     </div>
                 </Carousel>
             </section>
