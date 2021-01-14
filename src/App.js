@@ -9,13 +9,24 @@ const App = () => {
                 <h1 className="app-title">Carousel Demo</h1>
             </header>
             <section className="section">
-                <Carousel inteereval={2200} autoplay controls indicators>
+                <Carousel interval={3000} autoplay controls indicators>
                     <div className="item item-1">
                         <div className="html-content">
                             <h1>Hello world!</h1>
                             <p>
                                 This is my Carousel Component =)
                             </p>
+                        </div>
+                    </div>
+                    <div className="item item-2">
+                        <div className="html-content">
+                            <h1>It supports auto play</h1>
+                            <p>
+                                Hover over the carousel to pause animation
+                            </p>
+                            <span className="note">
+                                Note: animation is disabled on mobile devices
+                            </span>
                         </div>
                     </div>
                     <div className="item item-4">
@@ -34,7 +45,7 @@ const App = () => {
                             </ul>
                         </div>
                     </div>
-                    <div className="item item-2">
+                    <div className="item item-1">
                         <div className="html-content">
                             <h1>Works for any HTML content</h1>
                             <p>Including images</p>
