@@ -46,7 +46,7 @@ export const Control = styled.button`
     width: 10%;
     height: 100%;
     place-items: center;
-    background-color: transparent;
+    background-color: rgba(0,0,0,0.05);
     border: none;
     transform: ${props => props.direction === "backward" ? "rotate(180deg)" : "unset"};
     transition: opacity .1s ease-in;
@@ -63,10 +63,11 @@ export const Control = styled.button`
             opacity: 1;
         }
     }
+
 `
 
 export const Arrow = styled.div`
-    border-color:  #000;
+    border-color:  #fff;
     border-style: solid;
     border-width: 3px 3px 0 0;
     width: 20px;

@@ -71,6 +71,7 @@
     justify-content: center;
     align-items: center;
     font-size: larger;
+    padding: 1rem;
   }
 
   .block{
@@ -84,7 +85,7 @@
     margin: auto;
   }
 
-  @media(max-width: 600px){
+  @media(max-width: 700px){
     .item{
       height: 300px;
     }

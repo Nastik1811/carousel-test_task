@@ -110,41 +110,41 @@ const Carousel = ({children, interval=minInterval, controls, indicators, autopla
     }
     return(
         <Container onMouseOver={() => setAutorotationEnabled(false)} onMouseLeave={() => setAutorotationEnabled(true)}>
-            {controls &&
-                <Control direction="backward" onClick={() => handleNavigation(i => i - 1)}>
-                    <Arrow/>
-                </Control>
-            }   
             <SlideArea ref={areaRef}>
-                <Track  
-                    onPointerDown={handleDown} 
-                    onPointerMove={handleMove} 
-                    onPointerUp={handleUp}
-                    onPointerCancel={handleUp}
-                    onPointerLeave={handleUp}
-                    activeIndex={activeIndex} 
-                    offset={offset}
-                    withTransition={transitionActive}
-                    onTransitionEnd={handleTransitionEnd}
-                    >
-                        <Slide order={-1} aria-hidden={true}>{children[React.Children.count(children) - 1]}</Slide>
-                        {
-                            React.Children.map(children, (slide, index) => 
-                            <Slide 
-                                key={index} 
-                                order={index}
-                                aria-hidden={activeIndex !== index}
-                                >{slide}
-                            </Slide>)
-                        }
-                        <Slide order={React.Children.count(children)} aria-hidden={true}>{children[0]}</Slide>
-                </Track>
+                {controls &&
+                    <Control direction="backward" onClick={() => handleNavigation(i => i - 1)}>
+                        <Arrow/>
+                    </Control>
+                    }   
+                    <Track  
+                        onPointerDown={handleDown} 
+                        onPointerMove={handleMove} 
+                        onPointerUp={handleUp}
+                        onPointerCancel={handleUp}
+                        onPointerLeave={handleUp}
+                        activeIndex={activeIndex} 
+                        offset={offset}
+                        withTransition={transitionActive}
+                        onTransitionEnd={handleTransitionEnd}
+                        >
+                            <Slide order={-1} aria-hidden={true}>{children[React.Children.count(children) - 1]}</Slide>
+                            {
+                                React.Children.map(children, (slide, index) => 
+                                <Slide 
+                                    key={index} 
+                                    order={index}
+                                    aria-hidden={activeIndex !== index}
+                                    >{slide}
+                                </Slide>)
+                            }
+                            <Slide order={React.Children.count(children)} aria-hidden={true}>{children[0]}</Slide>
+                    </Track>
+                    {controls &&
+                    <Control direction="forward" onClick={() => handleNavigation(i => i + 1)}>
+                        <Arrow/>
+                    </Control>
+                    }
             </SlideArea>
-            {controls &&
-                <Control direction="forward" onClick={() => handleNavigation(i => i + 1)}>
-                    <Arrow/>
-                </Control>
-            }
             {indicators &&
                 <Nav>
                     {React.Children.map(children, (slide, index) => <Indicator active={activeIndex === index} key={index} onClick={() => handleNavigation(index)}/>)}
