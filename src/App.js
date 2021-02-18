@@ -55,6 +55,9 @@ const App = () => {
                         <img src={img1} className="img-item"/>
                     </div>
                     <div className="item item-4">
+                        <iframe className="video-item" src="https://www.youtube.com/embed/rXMB5WSCVks"/>
+                    </div>
+                    <div className="item item-5">
                         <div className="html-content">
                             <h1>And supprot infinite slide show =)</h1>
                             <p>

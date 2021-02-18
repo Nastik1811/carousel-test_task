@@ -9,6 +9,7 @@ export const Container = styled.div`
     row-gap: 12px;
     grid-auto-flow: row;
     place-items: center;
+    touch-action: none;
 `
 
 export const SlideArea = styled.div`
@@ -17,6 +18,7 @@ export const SlideArea = styled.div`
     position: relative;
     margin: auto;
     width: 100%;
+    touch-action: none;
 `
 
 export const Track = styled.ul.attrs(props=> (
@@ -31,7 +33,7 @@ export const Track = styled.ul.attrs(props=> (
     grid-auto-columns: 100%;
     grid-template-rows: min-content;
     grid-auto-flow: column;
-
+    touch-action: manipulation;
 `
 
 export const Control = styled.button`
@@ -63,7 +65,6 @@ export const Control = styled.button`
             opacity: 1;
         }
     }
-
 `
 
 export const Arrow = styled.div`

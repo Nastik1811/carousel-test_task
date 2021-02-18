@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Container, Slide, SlideArea, Track, Nav, Indicator, Control, Arrow } from './styles'
 
-
 const minInterval = 2000
 
 const Carousel = ({children, interval=minInterval, controls, indicators, autoplay}) => {
@@ -26,8 +25,8 @@ const Carousel = ({children, interval=minInterval, controls, indicators, autopla
         return () => document.removeEventListener("visibilitychange", handleVisabilityChange)
     }, [])
 
-
     useEffect(() => {
+        console.log('ontouchstart' in window)
         if(!autoplay ||  'ontouchstart' in window ){
             return
         }
@@ -57,8 +56,11 @@ const Carousel = ({children, interval=minInterval, controls, indicators, autopla
     }
 
     const handleMove = (e) => {
-        if(!isSwiping){return;}
-        setOffset(e.pageX-touchX);
+        console.log(e.pageX)
+        if(!isSwiping){
+            return
+        }
+        setOffset(e.pageX-touchX)
     }
 
     const handleUp = () => {
@@ -108,6 +110,7 @@ const Carousel = ({children, interval=minInterval, controls, indicators, autopla
             </Container>
         )
     }
+
     return(
         <Container onMouseOver={() => setAutorotationEnabled(false)} onMouseLeave={() => setAutorotationEnabled(true)}>
             <SlideArea ref={areaRef}>
@@ -122,6 +125,7 @@ const Carousel = ({children, interval=minInterval, controls, indicators, autopla
                         onPointerUp={handleUp}
                         onPointerCancel={handleUp}
                         onPointerLeave={handleUp}
+
                         activeIndex={activeIndex} 
                         offset={offset}
                         withTransition={transitionActive}
@@ -134,7 +138,8 @@ const Carousel = ({children, interval=minInterval, controls, indicators, autopla
                                     key={index} 
                                     order={index}
                                     aria-hidden={activeIndex !== index}
-                                    >{slide}
+                                    >
+                                        {slide}
                                 </Slide>)
                             }
                             <Slide order={React.Children.count(children)} aria-hidden={true}>{children[0]}</Slide>
