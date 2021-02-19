@@ -55,7 +55,9 @@ const App = () => {
                         <img src={img1} className="img-item"/>
                     </div>
                     <div className="item item-4">
-                        <iframe className="video-item" src="https://www.youtube.com/embed/rXMB5WSCVks"/>
+                        <video class="video-item" loop autoPlay muted>
+                            <source src="https://mdbootstrap.com/img/video/animation-intro.mp4" type="video/mp4" />
+                        </video>
                     </div>
                     <div className="item item-5">
                         <div className="html-content">

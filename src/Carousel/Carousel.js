@@ -50,12 +50,13 @@ const Carousel = ({children, interval=minInterval, controls, indicators, autopla
     }
 
     const handleDown = (e) => {
-        e.preventDefault()
+        e.stopPropagation()
         setIsSwiping(true)
         setTouchX(e.pageX)
     }
 
     const handleMove = (e) => {
+        e.stopPropagation()
         console.log(e.pageX)
         if(!isSwiping){
             return
@@ -91,6 +92,7 @@ const Carousel = ({children, interval=minInterval, controls, indicators, autopla
         }
     }
 
+
     if(!children){
         return(
             null
@@ -119,13 +121,12 @@ const Carousel = ({children, interval=minInterval, controls, indicators, autopla
                         <Arrow/>
                     </Control>
                     }   
-                    <Track  
-                        onPointerDown={handleDown} 
-                        onPointerMove={handleMove} 
-                        onPointerUp={handleUp}
+                    <Track
+                        onPointerMoveCapture={handleMove} 
+                        onPointerUpCapture={handleUp}
                         onPointerCancel={handleUp}
                         onPointerLeave={handleUp}
-
+                        onPointerDownCapture={handleDown}
                         activeIndex={activeIndex} 
                         offset={offset}
                         withTransition={transitionActive}
